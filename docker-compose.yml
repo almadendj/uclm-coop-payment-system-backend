@@ -1,0 +1,28 @@
+version: "3.9"
+
+services:
+  coop-payment-system-laravel:
+    container_name: coop-payment-system-laravel
+    image: almadendj/coop-payment-system-laravel:0.0.5
+    build: .
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    depends_on:
+      - coopdb
+    
+  coopdb:
+    container_name: coopdb
+    image: postgres:12
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=coopdb
+      - POSTGRES_PASSWORD=coopdb
+      - POSTGRES_DB=coopdb
+    volumes:
+      - coop-pg-data:/var/lib/postgresql/data
+    
+volumes:
+  coop-pg-data: {}
